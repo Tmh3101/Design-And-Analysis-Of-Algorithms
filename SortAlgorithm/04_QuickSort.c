@@ -17,17 +17,16 @@ void swap(recordtype *a, recordtype *b){
 	*b = tmp;
 }
 
-int findPivot(recordtype a[], int L, int R){
+int find_pivot(recordtype *a, int L, int R){
 	keytype firstkey = a[L].key;
 	int k = L + 1;
-	while(k <= R && firstkey == a[k].key) k++;
+	while(k <= R && a[k].key == firstkey) k++;
 	if(k > R) return -1;
-	if(a[k].key > firstkey) return k;
-	return L;
+	return (firstkey < a[k].key) ? k : L;
 }
 
-int partition(recordtype a[], int L, int R, int p){
-	while(L <= R) {
+int partition(recordtype *a, int L, int R, int p){
+	while(L <= R){
 		while(a[L].key < p) L++;
 		while(a[R].key >= p) R--;
 		if(L < R) swap(&a[L], &a[R]);
@@ -35,40 +34,53 @@ int partition(recordtype a[], int L, int R, int p){
 	return L;
 }
 
-void quickSort(recordtype a[], int L, int R){
-	int pivotIndex = findPivot(a, L, R);
-	if(pivotIndex != -1) {
-		keytype p = a[pivotIndex].key;
-		int k = partition(a, L, R, p);
-		quickSort(a, L, k - 1);
-		quickSort(a, k, R);
-	} 
+void quick_sort(recordtype *a, int L, int R){
+	int pivot_index = find_pivot(a, L, R);
+	if(pivot_index == -1) return;
+	keytype p = a[pivot_index].key;
+	int k = partition(a, L, R, p);
+	quick_sort(a, L, k - 1);
+	quick_sort(a, k, R);
+}
+
+
+void read_file(recordtype *a, int *n){
+	FILE *f = fopen("data.txt", "r");
+	if(f == NULL){
+		printf("Error\n");
+		return;
+	}
+	
+	int i = 0;
+	while(fscanf(f, "%d %f", &a[i].key, &a[i].otherfields) > 0){
+		i++;
+	}
+	
+	fclose(f);
+	*n = i;
+}
+
+void print_data(recordtype *a, int n){
+	int i;
+	for(i = 0; i < n; i++){
+		printf("%3d %5d  %8.2f\n", i, a[i].key, a[i].otherfields);
+	}
 }
 
 int main(){
 	recordtype a[100];
-	int n = 0;
-	int key;
-	float otherfields;
-
-	freopen("data.txt", "r", stdin);
-	do {
-		key = INT_MIN;
-		otherfields = FLT_MIN;
-		scanf("%d%f", &key, &otherfields);
-		if (key != INT_MIN && otherfields != FLT_MIN){
-			a[n].key = key;
-			a[n].otherfields = otherfields;
-			n++;
-		}
-	} while (key != INT_MIN && otherfields != FLT_MIN);
-
-	quickSort(a, 0, n - 1);
-
-	int i;
-	for(i = 0; i < n; i++){
-		printf("%d %.2f\n", a[i].key, a[i].otherfields);
-	}
+	int n ;
+	
+	printf("---Quick Sort---\n");
+	read_file(a, &n);
+	
+	printf("* Truoc khi sap xep:\n");
+	print_data(a, n);
+	
+	quick_sort(a, 0, n - 1);
+	
+	printf("* Sau khi sap xep:\n");
+	print_data(a, n);
 	
 	return 0;
 }
