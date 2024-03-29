@@ -17,62 +17,83 @@ void swap(recordtype *a, recordtype *b){
 	*b = tmp;
 }
 
+<<<<<<< HEAD:TH1_SortAlgorithm/05_HeapSort.c
 void pushDown(recordtype a[], int first, int last) {
+=======
+void push_down(recordtype *a, int first, int last){
+>>>>>>> 4f111ea044e947b9d76a4476b208f2391900acb0:SortAlgorithm/05_HeapSort.c
 	int r = first;
 	while(r <= (last - 1) / 2){
 		int L = 2 * r + 1;
 		int R = 2 * r + 2;
-		if(last == 2 * r + 1){ 		//r chi co con trai
-			if(a[r].key < a[last].key) swap(&a[r], &a[last]);
+		
+		if(last == L){
+			if(a[r].key > a[last].key) swap(&a[r], &a[last]);
 			r = last;
-		} else if(a[r].key > a[L].key && a[L].key <= a[R].key){
+		} 
+		else if(a[r].key > a[L].key && a[L].key <= a[R].key){
 			swap(&a[r], &a[L]);
 			r = L;
-		} else if(a[r].key > a[R].key && a[L].key > a[R].key){
+		}
+		else if(a[r].key > a[R].key && a[L].key > a[R].key){
 			swap(&a[r], &a[R]);
 			r = R;
-		} else r = last;
+		}
+		else r = last;
+		
 	}
 }
 
-
-void heapSort(recordtype a[], int n){
+void heap_sort(recordtype *a, int n){
 	int i;
-	for(i = n - 2; i >= 0; i--){
-		pushDown(a, i, n - 1);
+	for(i = (n - 2) / 2; i >= 0; i--){
+		push_down(a, i, n - 1);
 	}
 	for(i = n - 1; i >= 2; i--){
 		swap(&a[0], &a[i]);
-		pushDown(a, 0, i - 1);
+		push_down(a, 0, i - 1);
 	}
 	swap(&a[0], &a[1]);
 }
 
 
+void read_file(recordtype *a, int *n){
+	FILE *f = fopen("data.txt", "r");
+	if(f == NULL){
+		printf("Error\n");
+		return;
+	}
+	
+	int i = 0;
+	while(fscanf(f, "%d %f", &a[i].key, &a[i].otherfields) > 0){
+		i++;
+	}
+	
+	fclose(f);
+	*n = i;
+}
+
+void print_data(recordtype *a, int n){
+	int i;
+	for(i = n - 1; i >= 0; i--){
+		printf("%3d %5d  %8.2f\n", i, a[i].key, a[i].otherfields);
+	}
+}
+
 int main(){
 	recordtype a[100];
-	int n = 0;
-	int key;
-	float otherfields;
-
-	freopen("data.txt", "r", stdin);
-	do {
-		key = INT_MIN;
-		otherfields = FLT_MIN;
-		scanf("%d%f", &key, &otherfields);
-		if (key != INT_MIN && otherfields != FLT_MIN){
-			a[n].key = key;
-			a[n].otherfields = otherfields;
-			n++;
-		}
-	} while (key != INT_MIN && otherfields != FLT_MIN);
-
-	heapSort(a, n);
-
-	int i;
-	for(i = 0; i < n; i++){
-		printf("%d %.2f\n", a[i].key, a[i].otherfields);
-	}
+	int n ;
+	
+	printf("---Heap Sort---\n");
+	read_file(a, &n);
+	
+	printf("* Truoc khi sap xep:\n");
+	print_data(a, n);
+	
+	heap_sort(a, n);
+	
+	printf("* Sau khi sap xep:\n");
+	print_data(a, n);
 	
 	return 0;
 }
