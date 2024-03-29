@@ -46,6 +46,7 @@ void quickSort(recordtype a[], int L, int R){
 }
 
 int main(){
+	
 	recordtype a[100];
 	int n = 0;
 	int key;

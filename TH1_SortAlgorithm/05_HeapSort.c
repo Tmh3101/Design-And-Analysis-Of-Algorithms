@@ -17,7 +17,7 @@ void swap(recordtype *a, recordtype *b){
 	*b = tmp;
 }
 
-void pushDown(recordtype a[], int first, int last){
+void pushDown(recordtype a[], int first, int last) {
 	int r = first;
 	while(r <= (last - 1) / 2){
 		int L = 2 * r + 1;
