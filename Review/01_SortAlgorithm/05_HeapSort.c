@@ -37,17 +37,16 @@ void pushDown(recordtype *a, int first, int last){
 		if(L == last){
 			if(a[r].key > a[L].key) swap(&a[r], &a[L]);
 			r = L;
-		} else {
-			if(a[r].key > a[L].key && a[L].key <= a[R].key){
-				swap(&a[r], &a[L]);
-				r = L;
-			}
-			else if(a[r].key > a[R].key && a[R].key < a[L].key){
-				swap(&a[r], &a[R]);
-				r = R;
-			}
-			else r =last;
-		}	
+		}
+		else if(a[r].key > a[L].key && a[L].key <= a[R].key){
+			swap(&a[r], &a[L]);
+			r = L;
+		}
+		else if(a[r].key > a[R].key && a[R].key < a[L].key){
+			swap(&a[r], &a[R]);
+			r = R;
+		}
+		else r =last;
 	}
 }
 
