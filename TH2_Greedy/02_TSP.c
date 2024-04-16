@@ -89,10 +89,8 @@ void TSP_Greedy(Canh a[], int n, Canh PA[]){
 		r_cuoi = find_root(parent, a[i].cuoi);
 
 		if(!dinhCapBa(PA, j, a[i]) && !chu_trinh(r_dau, r_cuoi)){
-
 			PA[j++] = a[i];
 			update_forest(parent, r_dau, r_cuoi);
-
 		}
 	}
 

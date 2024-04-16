@@ -25,8 +25,8 @@ void ReadFromFile(canh a[][size], int *n){
 			a[i][j].da_dung = 0;
 		}
 	}
+
 	fclose(f);
-	
 }
 
 float canh_NN(canh a[][size], int n){
@@ -71,7 +71,7 @@ int co_chu_trinh(canh x[], int k, int ke_tiep){
 void Nhanh_Can(canh a[][size], int n, int i, int dau, float *TGT, float *CD, float *GNNTT, canh x[], canh PA[]){
 	int j;
 	for(j = 0; j < n; j++){
-		if(dau != j && !a[dau][j].da_dung && !co_chu_trinh(x, i, j)){
+		if(dau != j && !a[dau][j].da_dung && !co_chu_trinh(x, i, j)) {
 
 			*TGT += a[dau][j].do_dai;
 			*CD = can_duoi(a, *TGT, n, i + 1);
@@ -82,12 +82,8 @@ void Nhanh_Can(canh a[][size], int n, int i, int dau, float *TGT, float *CD, flo
 				a[dau][j].da_dung = 1;
 				a[j][dau].da_dung = 1;
 				
-				if(i == n - 2){
-					Cap_Nhat_PA_TNTT(a, n, *TGT, GNNTT, x, PA);
-				}
-				else {
-					Nhanh_Can(a, n, i + 1, j, TGT, CD, GNNTT, x, PA);
-				}	
+				if(i == n - 2) Cap_Nhat_PA_TNTT(a, n, *TGT, GNNTT, x, PA);
+				else Nhanh_Can(a, n, i + 1, j, TGT, CD, GNNTT, x, PA);	
 			}
 
 			*TGT -= a[dau][j].do_dai;
@@ -112,8 +108,6 @@ void in_PA(canh PA[], int n){
 	printf("%c", PA[0].dau + 97);
 	printf("\nTong Do Dai: %.2f", sum);
 }
-
-
 
 int main(){
 	
@@ -140,7 +134,6 @@ int main(){
 	scanf("%c", &tpxp);
 	Nhanh_Can(a, n, 0, tpxp - 97, &TGT, &CD, &GNNTT, x, PA);
 	in_PA(PA, n);
-	
 	
 	return 0;
 }

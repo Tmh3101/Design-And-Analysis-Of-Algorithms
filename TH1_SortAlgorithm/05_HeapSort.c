@@ -17,11 +17,7 @@ void swap(recordtype *a, recordtype *b){
 	*b = tmp;
 }
 
-<<<<<<< HEAD:TH1_SortAlgorithm/05_HeapSort.c
-void pushDown(recordtype a[], int first, int last) {
-=======
 void push_down(recordtype *a, int first, int last){
->>>>>>> 4f111ea044e947b9d76a4476b208f2391900acb0:SortAlgorithm/05_HeapSort.c
 	int r = first;
 	while(r <= (last - 1) / 2){
 		int L = 2 * r + 1;

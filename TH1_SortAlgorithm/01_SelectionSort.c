@@ -19,7 +19,7 @@ void swap(recordtype *a, recordtype *b){
 
 void selection_sort(recordtype *a, int n){
 	int i, j;
-	for(i = 0; i < n; i++){
+	for(i = 0; i < n - 1; i++){
 		int min_i = i;
 		int min_key = a[i].key;
 		for(j = i + 1; j < n; j++){
