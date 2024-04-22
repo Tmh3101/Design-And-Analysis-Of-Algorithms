@@ -12,7 +12,7 @@ DoVat* ReadFromFile(float *W, int *n){
 	FILE *f = fopen("data_balo1.txt", "r");
 	if(f == NULL){
 		printf("error");
-		return;
+		return NULL;
 	}
 	fscanf(f, "%f", W);
 	DoVat *dsdv;
