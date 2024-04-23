@@ -51,7 +51,7 @@ void Cap_Nhat_PA_TNTT(canh a[][size], int n, float TGT, float *GNNTT, canh x[], 
 	x[n - 1] = a[x[n - 2].cuoi][x[0].dau];
 	TGT += x[n - 1].do_dai;
 	if(*GNNTT > TGT){
-		*GNNTT = TGT;
+		*GNNTT = TGT;		
 		for(i = 0; i < n; i++){
 			PA[i] = x[i];
 		}
