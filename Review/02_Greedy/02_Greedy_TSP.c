@@ -67,7 +67,6 @@ void initForest(int *p, int n){
 	}
 }
 
-
 int findRoot(int *p, int u){
 	if(p[u] == u) return u;
 	return findRoot(p, p[u]);
